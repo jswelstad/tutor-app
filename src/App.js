@@ -5,7 +5,6 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { fetchAuthSession } from 'aws-amplify/auth';
 
-
 Amplify.configure(awsExports);
 
 function AppContent() {

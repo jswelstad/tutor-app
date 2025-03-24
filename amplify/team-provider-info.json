@@ -10,6 +10,11 @@
       "StackName": "amplify-tutorapp-dev-3d9a4",
       "StackId": "arn:aws:cloudformation:us-west-1:904233119597:stack/amplify-tutorapp-dev-3d9a4/47b4afd0-08fc-11f0-9a4e-020f51ce6711",
       "AmplifyAppId": "d2a5o5yesmzam3"
+    },
+    "categories": {
+      "auth": {
+        "tutorapp1572df88": {}
+      }
     }
   }
 }

@@ -1,24 +1,35 @@
 import { useEffect, useState } from 'react';
 import { Amplify } from 'aws-amplify';
-import awsExports from './aws-exports';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { fetchAuthSession } from 'aws-amplify/auth';
+import awsExports from './aws-exports';
 
 Amplify.configure(awsExports);
 
-function AppContent() {
+function AppContent({ user }) {
   const [userGroup, setUserGroup] = useState(null);
 
   useEffect(() => {
     fetchAuthSession()
       .then(session => {
-        const groups = session.accessToken.payload["cognito:groups"];
-        if (groups?.includes("Admin")) setUserGroup("Admin");
-        else if (groups?.includes("FrontDesk")) setUserGroup("FrontDesk");
-        else setUserGroup("Unknown");
+  
+        const payload = session.tokens?.accessToken?.payload;
+  
+        const groups = payload?.["cognito:groups"];
+  
+        if (groups?.includes("Admin")) 
+          setUserGroup("Admin");
+        else if (groups?.includes("FrontDesk")) 
+          setUserGroup("FrontDesk");
+        else 
+          setUserGroup("Unknown");
       })
+      .catch(err => {
+        setUserGroup("Unknown");
+      });
   }, []);
+  
 
   if (!userGroup) return <p>Loading...</p>;
 
@@ -52,9 +63,9 @@ function AppContent() {
 function App() {
   return (
     <Authenticator>
-      {({ signOut }) => (
+      {({ signOut, user }) => (
         <main style={{ padding: '2rem' }}>
-          <AppContent />
+          <AppContent user={user} />
           <button onClick={signOut}>Sign out</button>
         </main>
       )}

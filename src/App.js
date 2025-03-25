@@ -9,6 +9,7 @@ Amplify.configure(awsExports);
 
 function AppContent({ user }) {
   const [userGroup, setUserGroup] = useState(null);
+  let content = <p>Loading...</p>;
 
   useEffect(() => {
     fetchAuthSession()
@@ -31,31 +32,34 @@ function AppContent({ user }) {
   }, []);
   
 
-  if (!userGroup) return <p>Loading...</p>;
+  if (userGroup === "Admin") {
+    content = (
+      <div>
+        <h3> Admin Dashboard</h3>
+        <p>Here you can add/edit/remove tutors and schedules.</p>
+      </div>
+    );
+  } 
+  else if (userGroup === "FrontDesk") {
+    content = (
+      <div>
+        <h3> Front Desk Tools</h3>
+        <p>Search tutors and check availability here.</p>
+      </div>
+    );
+  } 
+  else if (userGroup === "Unknown") {
+    content = (
+      <div>
+        <p>You are not part of a recognized user group.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
       <h2>Logged in as: {userGroup}</h2>
-
-      {userGroup === "Admin" && (
-        <div>
-          <h3>🛠 Admin Dashboard</h3>
-          <p>Here you can add/edit/remove tutors and schedules.</p>
-        </div>
-      )}
-
-      {userGroup === "FrontDesk" && (
-        <div>
-          <h3>📋 Front Desk Tools</h3>
-          <p>Search tutors and check availability here.</p>
-        </div>
-      )}
-
-      {userGroup === "Unknown" && (
-        <div>
-          <p>You are not part of a recognized user group.</p>
-        </div>
-      )}
+      {content}
     </div>
   );
 }

@@ -9,6 +9,7 @@ Amplify.configure(awsExports);
 
 function AppContent({ user }) {
   const [userGroup, setUserGroup] = useState(null);
+  
   let content = <p>Loading...</p>;
 
   useEffect(() => {

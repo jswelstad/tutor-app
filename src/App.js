@@ -59,7 +59,7 @@ function AppContent({ user }) {
 
   return (
     <div>
-      <h2>Logged in as: {userGroup}</h2>
+      <h2>You are logged in as: {userGroup}</h2>
       {content}
     </div>
   );
